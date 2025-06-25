@@ -13,6 +13,8 @@ import 'package:go_router_demo/screens/register_screen.dart';
 import 'package:go_router_demo/screens/activity_screen.dart'; // Added
 import 'package:go_router_demo/screens/profile_screen.dart'; // Added
 import 'package:go_router_demo/screens/social_screen.dart'; // Added
+// SEO imports - web only
+import 'package:go_router_demo/seo/seo_service.dart' if (dart.library.io) 'package:go_router_demo/seo/seo_service_mobile.dart';
 
 final Routes appRoutes = Routes();
 final RouteNames routeNames = RouteNames();
@@ -34,6 +36,12 @@ class AppRouter {
           return appRoutes.login;
         }
       }
+      
+      // Update SEO on route changes (web only)
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        SeoService.instance.updateForRoute(state);
+      });
+      
       return null;
     },
   );
