@@ -58,19 +58,68 @@ class AppWebLayout extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          NavigationRail(
-            selectedIndex: _calculateSelectedIndex(context),
-            onDestinationSelected: (index) => _onItemTapped(index, context),
-            labelType: NavigationRailLabelType.all,
-            destinations: const [
-              NavigationRailDestination(
-                  icon: Icon(Icons.home), label: Text('Home')),
-              NavigationRailDestination(
-                  icon: Icon(Icons.list_alt), label: Text('Activity')),
-              NavigationRailDestination(
-                  icon: Icon(Icons.person), label: Text('Profile')),
-              NavigationRailDestination(
-                  icon: Icon(Icons.people), label: Text('Social')),
+          Stack(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    right: BorderSide(color: Colors.grey, width: 0.5),
+                  ),
+                ),
+                child: NavigationRail(
+                  selectedIndex: _calculateSelectedIndex(context),
+                  onDestinationSelected: (index) =>
+                      _onItemTapped(index, context),
+                  labelType: NavigationRailLabelType.all,
+                  backgroundColor: Colors.transparent,
+                  selectedIconTheme: const IconThemeData(
+                    color: Color(0xFF6B46C1), // Purple color for selected icon
+                    size: 24,
+                  ),
+                  unselectedIconTheme: const IconThemeData(
+                    color: Colors.grey,
+                    size: 24,
+                  ),
+                  selectedLabelTextStyle: const TextStyle(
+                    color: Color(0xFF6B46C1), // Purple color for selected text
+                    fontWeight: FontWeight.w600,
+                  ),
+                  unselectedLabelTextStyle: const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  useIndicator:
+                      false, // Remove the default background indicator
+                  destinations: const [
+                    NavigationRailDestination(
+                        icon: Icon(Icons.home), label: Text('Home')),
+                    NavigationRailDestination(
+                        icon: Icon(Icons.list_alt), label: Text('Activity')),
+                    NavigationRailDestination(
+                        icon: Icon(Icons.person), label: Text('Profile')),
+                    NavigationRailDestination(
+                        icon: Icon(Icons.people), label: Text('Social')),
+                  ],
+                ),
+              ),
+              // Custom left border indicator
+              Positioned(
+                left: 0,
+                top: (_calculateSelectedIndex(context) *
+                    56), // Adjust positioning
+                child: Container(
+                  width: 4,
+                  height: 56,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF6B46C1),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(2),
+                      bottomRight: Radius.circular(2),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           Expanded(child: child),
